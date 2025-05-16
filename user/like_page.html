@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Movie Likes</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-5">
+  <h2>Movies You Can Like</h2>
+  <div id="movieList"></div>
+
+  <script>
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user) {
+      alert("Please log in first");
+      window.location.href = "/auth/login.html";
+    }
+
+    async function fetchMovies() {
+      const res = await fetch("/api/movies.php");
+      const movies = await res.json();
+      const container = document.getElementById("movieList");
+      container.innerHTML = "";
+
+      for (const movie of movies) {
+        const likeRes = await fetch(`/api/like_status.php?movie_id=${movie.id}`);
+        const likeData = await likeRes.json();
+        const isLiked = likeData.liked;
+        const likeCount = likeData.like_count;
+
+        const div = document.createElement("div");
+        div.className = "mb-3";
+        div.innerHTML = `
+          <h5>${movie.title}</h5>
+          <p>Likes: <span id="like-count-${movie.id}">${likeCount}</span></p>
+          <button class="btn ${isLiked ? 'btn-danger' : 'btn-outline-primary'}"
+            onclick="toggleLike(${movie.id}, this)">
+            ${isLiked ? 'Unlike' : 'Like'}
+          </button>
+          <hr>
+        `;
+        container.appendChild(div);
+      }
+    }
+
+    async function toggleLike(movieId, btn) {
+      const res = await fetch("/api/like.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user_id: user.id, movie_id: movieId })
+      });
+
+      const data = await res.json();
+      if (data.liked !== undefined) {
+        btn.textContent = data.liked ? "Unlike" : "Like";
+        btn.classList.toggle("btn-danger", data.liked);
+        btn.classList.toggle("btn-outline-primary", !data.liked);
+
+        const likeCountRes = await fetch(`/api/like_status.php?movie_id=${movieId}`);
+        const likeData = await likeCountRes.json();
+        document.getElementById(`like-count-${movieId}`).textContent = likeData.like_count;
+      }
+    }
+
+    fetchMovies();
+  </script>
+</body>
+</html>
