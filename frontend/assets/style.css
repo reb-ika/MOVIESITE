@@ -1,0 +1,273 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column; /* Ensure vertical stacking */
+}
+
+.navbar {
+    width: 100%;
+    height: 50px;
+    background-color: black;
+}
+
+.navbar-container {
+    display: flex;
+    align-items: center;
+    padding: 0 50px;
+    color: white;
+    font-family: 'Sen', sans-serif;
+}
+
+.logo-container {
+    flex: 6;
+}
+
+.logo {
+    font-size: 24px;
+    color: green;
+}
+
+.menu-container {
+    flex: 6;
+}
+
+.menu-list {
+    display: flex;
+    list-style: none;
+}
+
+.menu-list-item {
+    margin-right: 30px;
+}
+
+.menu-list-item.active {
+    font-weight: bold;
+}
+
+.profile-container {
+    flex: 2;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.profile-text-container {
+    margin: 0 20px;
+}
+
+.profile-picture {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.toggle {
+    width: 40px;
+    height: 18px;
+    background-color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    position: relative;
+    padding: 0 3px;
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Center vertically */
+}
+
+.toggle-icon {
+    color: gold;
+    position: absolute;
+    font-size: 12px;
+    z-index: 1;
+}
+
+.toggle-icon.fa-moon {
+    left: 4px; /* Position for moon icon */
+}
+
+.toggle-icon.fa-sun {
+    right: 4px; /* Position for sun icon */
+}
+
+.toggle-ball {
+    width: 16px;
+    height: 16px;
+    background-color: black;
+    position: absolute;
+    right: 1px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: right 0.3s;
+}
+
+.sidebar {
+    width: 50px;
+    height: 100vh;
+    background-color: black;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    padding-top: 8px;
+}
+
+.left-menu-icon {
+    color: white;
+    font-size: 20px;
+    margin-bottom: 10px; /* Fixed spacing */
+}
+
+.container {
+    display: flex; /* Use flexbox */
+    flex-direction: column; /* Stack children vertically */
+    min-height: calc(100vh - 50px); /* Adjust height */
+    margin-left: 50px;
+    background-color: black; /* Adjusted to avoid overlap with sidebar */
+}
+
+.content-container {
+    flex: 1;
+}
+
+.featured-content {
+    height: 100vh; /* Full viewport height */
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(21, 21, 21, 0.7)), url('img/images.jpeg');
+    background-size: cover; /* Ensure the background image covers the area */
+    background-position: center; /* Center the background image */
+    padding: 50px;
+}
+.featured-title{
+    width:150px ;
+    height: auto;
+    object-fit: cover;
+}
+
+.featured-desc {
+    display: block; /* Ensure it behaves as a block element */
+    color: lightgrey;
+    margin: 30px 0; /* Vertical spacing */
+    max-height: 4.5em; /* Limit height for 3 lines (approx.) */
+    overflow: hidden; /* Hide overflow */
+    display: -webkit-box; /* For Safari */
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3; /* Limit to 3 lines */
+    line-height: 1.5; /* Adjust line height */
+}
+.featured-button{
+    background-color: green;
+    color: white;
+    padding: 10px 20px ;
+    border-radius: 20px;
+    border:none;
+    outline:none;
+}
+
+.movie-list-container{
+    margin-top:20px;
+    padding: 0;
+}
+.movie-list-title {
+    font-size: 24px; /* Adjust as needed */
+    color: white;
+   padding: 0 20px;
+    margin:0; /* Space below the title */
+}
+
+.MOVIE-LIST-WRAPPER{
+    position: relative;
+     padding: 0 20px;
+    
+
+}
+.movie-list{
+    display: flex;
+    flex-direction: row;
+       overflow-x: auto; /* Allow horizontal scrolling if items exceed container width */
+    gap: 20px; /* Space between items */
+      padding: 0; /* Remove padding to align items */
+}
+   
+    
+.movie-list-item{
+       flex: 0 0 auto; /* Prevent items from shrinking, keep them at their width */
+    width: 200px; /* Set a fixed width for each item */
+    position: relative;
+
+}
+.movie-list-item:hover .movie-list-item-img{
+    transform:scale(1.2);
+    opacity: 0.5;
+}
+.movie-list-item:hover .movie-list-item-title
+.movie-list-item:hover .movie-list-item-desc
+.movie-list-item:hover .movie-list-button{
+    opacity: 1;
+}
+
+.movie-list-item-img{
+    transition: all 1s ease-in-out;
+    width: 270px;
+    height: 200px;
+    object-fit: cover;
+
+
+}
+.movie-list-item-title{
+    background-color: #333;
+    padding:0 10px;
+    font-size: 32px;
+    font-weight: bold;
+    position: absolute;
+    top: 10%;
+    left:10px;
+    opacity: 0;
+    transition:1s all ease-in-out;
+}
+.movie-list-item-desc{
+    background-color: #333;
+    padding: 10px;
+    font-size: 10px;
+    position: absolute;
+    top: 40%;
+    left:10px;
+    opacity: 0;
+    width: clac(80%);
+     transition:1s all ease-in-out;
+}
+.movie-list-button{
+    padding: 10px;
+    background-color: green;
+    color: white;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    bottom: 10px;
+    left: 50px;
+    opacity: 0;
+     transition:1s all ease-in-out;
+}
+.movie-list-item:hover .movie-list-item-title,
+.movie-list-item:hover .movie-list-item-desc,
+.movie-list-item:hover .movie-list-button {
+    opacity: 1; /* Make visible on hover */
+}
+.arrow{
+    font-size: 120px;
+    position: absolute;
+    top:90px;
+    right:0;
+    color: gray;
+    opacity:.5;
+    cursor: pointer;
+
+
+}

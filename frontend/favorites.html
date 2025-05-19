@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Favorites</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  <div class="container py-5">
+    <h2 class="mb-4">My Favorites</h2>
+    <div id="favoritesList" class="row"></div>
+  </div>
+  <script>
+    async function loadFavorites() {
+      const response = await fetch('api/favorites.php');
+      const data = await response.json();
+      const favoritesList = document.getElementById('favoritesList');
+      favoritesList.innerHTML = '';
+      if (data.status === 'success' && data.favorites) {
+        data.favorites.forEach(movie => {
+          const col = document.createElement('div');
+          col.className = 'col-md-4 mb-3';
+          col.innerHTML = `
+            <div class="card">
+              <img src="${movie.poster}" class="card-img-top" alt="${movie.title}">
+              <div class="card-body">
+                <h5 class="card-title">${movie.title}</h5>
+                <a href="details.html?id=${movie.id}" class="btn btn-primary">View Details</a>
+              </div>
+            </div>
+          `;
+          favoritesList.appendChild(col);
+        });
+      } else {
+        favoritesList.innerHTML = '<p>No favorites found.</p>';
+      }
+    }
+    loadFavorites();
+  </script>
+</body>
+</html>
