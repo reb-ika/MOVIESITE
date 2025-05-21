@@ -1,6 +1,6 @@
 <?php
 require_once '../includes/db.php';
-
+include '../includes/header.php';
 if (!isset($_GET['id'])) {
     die("Genre ID not provided.");
 }

@@ -1,6 +1,7 @@
 <?php
 require_once 'includes/db.php';
-session_start();
+include 'includes/header.php';
+
 
 // Get movie ID
 $movieId = isset($_GET['id']) ? intval($_GET['id']) : 0;

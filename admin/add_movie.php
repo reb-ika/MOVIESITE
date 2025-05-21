@@ -1,6 +1,8 @@
 <?php
 require_once '../includes/db.php';
 
+include '../includes/header.php';
+
 $message = '';
 
 // Fetch genres for the dropdown

@@ -1,6 +1,6 @@
 <?php
 require_once 'includes/db.php';
-
+include 'includes/header.php';
 // Fetch all movies
 $stmt = $pdo->query("SELECT * FROM movies ORDER BY created_at DESC");
 $movies = $stmt->fetchAll();
@@ -29,12 +29,15 @@ $movies = $stmt->fetchAll();
         <?php foreach ($movies as $movie): ?>
             <div class="col-md-3 col-sm-6 mb-4 movie-card">
                 <div class="card h-100">
-                    <a href="movie.php?id=<?= $movie['id'] ?>">
+                    <a href="<?= htmlspecialchars($movie['youtube_url']) ?>" target="_blank">
+
                         <img src="assets/images/<?= $movie['poster'] ?>" class="card-img-top" alt="<?= htmlspecialchars($movie['title']) ?>">
                     </a>
                     <div class="card-body">
+                        
                         <p class="movie-title"><?= htmlspecialchars($movie['title']) ?></p>
                         <p class="text-muted"><?= htmlspecialchars($movie['genre']) ?> | <?= date('Y', strtotime($movie['release_year'])) ?></p>
+                        
                     </div>
                 </div>
             </div>
@@ -42,3 +45,7 @@ $movies = $stmt->fetchAll();
     </div>
 </body>
 </html>
+<?php
+include 'includes/footer.php';
+?>
+

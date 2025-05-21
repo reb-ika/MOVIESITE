@@ -1,6 +1,6 @@
 <?php
 require_once '../includes/db.php';
-
+include '../includes/header.php';
 // Fetch all movies with the genre name
 $stmt = $pdo->query("SELECT movies.id, movies.title, movies.description, movies.release_year, genres.name AS genre 
                      FROM movies

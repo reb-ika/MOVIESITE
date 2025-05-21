@@ -1,6 +1,7 @@
     <?php
     require_once 'includes/db.php';
-    session_start();
+    include 'includes/header.php';
+    
 
     // Fetch movies with optional search and genre filter
     $search = isset($_GET['search']) ? trim($_GET['search']) : '';

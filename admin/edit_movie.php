@@ -1,6 +1,6 @@
 <?php
 require_once '../includes/db.php';
-
+include '../includes/header.php';
 $message = '';
 $movie_id = $_GET['id']; // Get movie ID from the URL
 

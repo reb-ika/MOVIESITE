@@ -1,6 +1,6 @@
 <?php
 require_once '../includes/db.php';
-
+include '../includes/header.php';
 // Fetch all movies
 $stmt = $pdo->query("SELECT * FROM movies");
 $movies = $stmt->fetchAll();

@@ -1,6 +1,6 @@
 <?php
 require_once '../includes/db.php';
-
+include '../includes/header.php';
 // Fetch all genres
 $stmt = $pdo->query("SELECT * FROM genres ORDER BY id DESC");
 $genres = $stmt->fetchAll();

@@ -1,6 +1,8 @@
 <?php
 require_once '../includes/db.php'; // adjust path if needed
 
+include '../includes/header.php';
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST['name'];
 
