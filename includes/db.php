@@ -2,7 +2,7 @@
 $host = '127.0.0.1';
 $db   = 'netflix_clone'; 
 $user = 'root';
-$port = '3307';
+$port = '3308';
 $pass = '';
 $charset = 'utf8mb4';
 
