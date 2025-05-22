@@ -1,15 +1,11 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
-export default function Signup() {
-  const [form, setForm] = useState({
-    username: '',
-    email: '',
-    password: '',
-    role: 'user',
-  });
-
+export default function Login() {
+  const router = useRouter();
+  const [form, setForm] = useState({ email: '', password: '' });
   const [message, setMessage] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -19,11 +15,11 @@ export default function Signup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMessage(null);
     setLoading(true);
+    setMessage(null);
 
     try {
-      const res = await fetch('http://localhost/MOVIESITE/api/register.php', {
+      const res = await fetch('http://localhost/MOVIESITE/api/login.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
@@ -38,13 +34,23 @@ export default function Signup() {
         throw new Error('Unexpected server response');
       }
 
-      if (!res.ok) {
-        throw new Error(data.error || 'Something went wrong');
-      }
+      if (data.user) {
+        // Save user data to localStorage
+        localStorage.setItem('user', JSON.stringify(data.user));
 
-      setMessage({ type: 'success', text: data.message });
-      setForm({ username: '', email: '', password: '', role: 'user' });
-      window.location.href = '/login';
+        setMessage({ type: 'success', text: `Welcome, ${data.user.username}` });
+
+        // Redirect based on user role
+        if (data.user.role === 'admin') {
+          router.push('/dashboard');
+        } else if (data.user.role === 'user') {
+          router.push('/user');
+        } else {
+          router.push('/'); // fallback route
+        }
+      } else {
+        throw new Error(data.message || 'Login failed');
+      }
     } catch (err) {
       setMessage({ type: 'error', text: err.message });
     } finally {
@@ -53,12 +59,12 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#f7f9fc] px-4">
+    <div className="min-h-screen flex items-center justify-center bg-[#f5f6f9] px-4">
       <form
         onSubmit={handleSubmit}
         className="w-full max-w-md bg-white p-8 rounded-xl shadow-lg border border-gray-200"
       >
-        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Create Account</h2>
+        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Login</h2>
 
         {message && (
           <div
@@ -71,21 +77,6 @@ export default function Signup() {
             {message.text}
           </div>
         )}
-
-        <div className="mb-4">
-          <label htmlFor="username" className="block text-sm font-medium text-gray-700">
-            Username
-          </label>
-          <input
-            id="username"
-            name="username"
-            type="text"
-            value={form.username}
-            onChange={handleChange}
-            required
-            className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none text-black"
-          />
-        </div>
 
         <div className="mb-4">
           <label htmlFor="email" className="block text-sm font-medium text-gray-700">
@@ -102,7 +93,7 @@ export default function Signup() {
           />
         </div>
 
-        <div className="mb-4">
+        <div className="mb-6">
           <label htmlFor="password" className="block text-sm font-medium text-gray-700">
             Password
           </label>
@@ -117,22 +108,6 @@ export default function Signup() {
           />
         </div>
 
-        <div className="mb-6">
-          <label htmlFor="role" className="block text-sm font-medium text-gray-700">
-            Role
-          </label>
-          <select
-            id="role"
-            name="role"
-            value={form.role}
-            onChange={handleChange}
-            className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none text-black"
-          >
-            <option value="user">User</option>
-            <option value="admin">Admin</option>
-          </select>
-        </div>
-
         <button
           type="submit"
           disabled={loading}
@@ -142,7 +117,7 @@ export default function Signup() {
               : 'bg-blue-600 hover:bg-blue-700'
           }`}
         >
-          {loading ? 'Registering...' : 'Sign Up'}
+          {loading ? 'Logging in...' : 'Login'}
         </button>
       </form>
     </div>
