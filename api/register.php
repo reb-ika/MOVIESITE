@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 
   // Insert new user
-  $stmt = $pdo->prepare("INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)");
+  $stmt = $pdo->prepare("INSERT INTO users (username, email, password, role) VALUES (?, ?, ?)");
   $stmt->execute([
     $data['username'],
     $data['email'],
